@@ -201,26 +201,27 @@ def unlisted_keys_endpoint():
     :return [401] Unauthorized (Invalid API Key)
 
     """
- 	if request.headers.get("Authorization") != API_KEY:
- 		return jsonify({"error": "Invalid API Key"}), 401
+
+    if request.headers.get("Authorization") != API_KEY:
+ 	    return jsonify({"error": "Invalid API Key"}), 401
 
 
 
- 	data = request.json
- 	discord_id = data["discord_id"]
- 	product_type = data["product_type"]
+    data = request.json
+    discord_id = data["discord_id"]
+    product_type = data["product_type"]
 
 
- 	keys = []
+    keys = []
 
 
- 	for x in LICENSE_KEY_STORE:
- 		if LICENSE_KEY_STORE[x]['discord'] == discord_id and LICENSE_KEY_STORE[x]['plan'] == product_type:
- 			key = dict({'key': x, 'data': LICENSE_KEY_STORE[x]})
- 			keys.append(key)
+    for x in LICENSE_KEY_STORE:
+ 	    if LICENSE_KEY_STORE[x]['discord'] == discord_id and LICENSE_KEY_STORE[x]['plan'] == product_type:
+ 		    key = dict({'key': x, 'data': LICENSE_KEY_STORE[x]})
+ 		    keys.append(key)
 
 
- 	return jsonify({"Keys": keys}), 200
+    return jsonify({"Keys": keys}), 200
 
 if __name__ == "__main__":
     app.run()
