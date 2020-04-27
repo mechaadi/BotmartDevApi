@@ -171,7 +171,7 @@ def plan_endpoint():
 @app.route("/unlisted-keys", methods=["POST"])
 def unlisted_keys_endpoint():
     """
-    Return list of available license plan
+    Return list of available license keys linked with discord id
      Input in JSON format :
     {
         "discord_id": <USER_DISCORD_ID>,
