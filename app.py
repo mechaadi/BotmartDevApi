@@ -17,13 +17,28 @@ LICENSE_KEY_STORE = {
 
     "PRIVATE_LICENSE_KEY2": {
         "renewal": False,
-        "discord": "651874915498328104",
+        "discord": "647663506153275409",
         "expire": "2022-01-01 00:00 UTC",
         "plan": "Lifetime"
     },
-  
+
+     "PRIVATE_LICENSE_KEY3": {
+        "renewal": False,
+        "discord": "661844035866198027",
+        "expire": "2022-01-01 00:00 UTC",
+        "plan": "Lifetime"
+    },
+
+     "PRIVATE_LICENSE_KEY20": {
+        "renewal": False,
+        "discord": "661844035866198027",
+        "expire": "2022-01-01 00:00 UTC",
+        "plan": "Lifetime"
+    },
+
 
 }
+
 
 OTP_STORE = {}
 
@@ -32,6 +47,7 @@ PLANS = ["Lifetime", "$60/6 months", "Plan 3"]
 # API Key
 #API_KEY = "uBhkCD2CY3ecdVbRLQadXFZ0y0FzaQ"
 API_KEY = "uBhkCD2CY3ecdVbRLQadXFZ0y0FzaQ"
+API_SECRET = "secretly_secret"
 
 
 app = Flask(__name__)
@@ -56,13 +72,16 @@ def verify_endpoint():
     :return 401 Unauthorized
     :return 404 Not Found
     """
+    data = request.json
     if request.headers.get("Authorization") != API_KEY:
         return jsonify({"error": "Invalid API Key"}), 401
 
-    data = request.json
+    if data["secret_key"] != API_SECRET:
+        return jsonify({"error": "Invalid API SECRET KEY"}), 401
+
+    
     license = data["license"]
     discord = data["discord"]
-    print(license)
 
     # Check if the license exists or not, return 404 if not found
     if license not in LICENSE_KEY_STORE:
@@ -111,10 +130,17 @@ def transfer_endpoint():
 
     :return 404 Not Found
     """
+
+    data = request.json
+    print(data, "data")
+
     if request.headers.get("Authorization") != API_KEY:
         return jsonify({"error": "Invalid API Key"}), 401
 
-    data = request.json
+    if data["secret_key"] != API_SECRET:
+        return jsonify({"error": "Invalid API SECRET KEY"}), 401
+
+    
     license = data["from_license"]
     discord = data["from_discord"]
     to_discord = data["to_discord"]
@@ -202,12 +228,17 @@ def unlisted_keys_endpoint():
 
     """
 
+    data = request.json
+
     if request.headers.get("Authorization") != API_KEY:
  	    return jsonify({"error": "Invalid API Key"}), 401
 
+    if data["secret_key"] != API_SECRET:
+        return jsonify({"error": "Invalid API SECRET KEY"}), 401
 
 
-    data = request.json
+
+    
     discord_id = data["discord_id"]
     product_type = data["product_type"]
 
@@ -224,4 +255,4 @@ def unlisted_keys_endpoint():
     return jsonify({"Keys": keys}), 200
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
