@@ -24,18 +24,31 @@ LICENSE_KEY_STORE = {
 
      "PRIVATE_LICENSE_KEY3": {
         "renewal": False,
-        "discord": "661844035866198027",
+        "discord": "575104533936603176",
         "expire": "2022-01-01 00:00 UTC",
         "plan": "Lifetime"
     },
 
-     "PRIVATE_LICENSE_KEY20": {
+     "PRIVATE_LICENSE_KEY21": {
         "renewal": False,
-        "discord": "661844035866198027",
+        "discord": "575104533936603176",
         "expire": "2022-01-01 00:00 UTC",
         "plan": "Lifetime"
     },
 
+     "PRIVATE_LICENSE_KEY22": {
+        "renewal": False,
+        "discord": "575104533936603176",
+        "expire": "2022-01-01 00:00 UTC",
+        "plan": "Lifetime"
+    },
+
+     "PRIVATE_LICENSE_KEY23": {
+        "renewal": False,
+        "discord": "575104533936603176",
+        "expire": "2022-01-01 00:00 UTC",
+        "plan": "Lifetime"
+    }
 
 }
 
@@ -44,9 +57,8 @@ OTP_STORE = {}
 
 PLANS = ["Lifetime", "$60/6 months", "Plan 3"]
 
-# API Key
-#API_KEY = "uBhkCD2CY3ecdVbRLQadXFZ0y0FzaQ"
-API_KEY = "uBhkCD2CY3ecdVbRLQadXFZ0y0FzaQ"
+
+API_KEY = "InlI1rJEncEEP79fus9CgQRIPe4lmY"
 API_SECRET = "secretly_secret"
 
 
@@ -79,7 +91,6 @@ def verify_endpoint():
     if data["secret_key"] != API_SECRET:
         return jsonify({"error": "Invalid API SECRET KEY"}), 401
 
-    
     license = data["license"]
     discord = data["discord"]
 
@@ -229,6 +240,7 @@ def unlisted_keys_endpoint():
     """
 
     data = request.json
+    print(data, flush=True)
 
     if request.headers.get("Authorization") != API_KEY:
         return jsonify({"error": "Invalid API Key"}), 401
@@ -256,4 +268,4 @@ def unlisted_keys_endpoint():
 
 if __name__ == "__main__":
     app.run(debug=True)
-   app.run(debug=True)
+   #app.run(debug=True)
