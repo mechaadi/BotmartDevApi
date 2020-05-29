@@ -197,7 +197,7 @@ def plan_endpoint():
 @app.route("/unlisted-keys", methods=["POST"])
 def unlisted_keys_endpoint():
     """
-    Return list of available license keys linked with discord id
+    Return list of available license plan
      Input in JSON format :
     {
         "discord_id": <USER_DISCORD_ID>,
@@ -231,7 +231,7 @@ def unlisted_keys_endpoint():
     data = request.json
 
     if request.headers.get("Authorization") != API_KEY:
- 	    return jsonify({"error": "Invalid API Key"}), 401
+        return jsonify({"error": "Invalid API Key"}), 401
 
     if data["secret_key"] != API_SECRET:
         return jsonify({"error": "Invalid API SECRET KEY"}), 401
@@ -247,12 +247,13 @@ def unlisted_keys_endpoint():
 
 
     for x in LICENSE_KEY_STORE:
- 	    if LICENSE_KEY_STORE[x]['discord'] == discord_id and LICENSE_KEY_STORE[x]['plan'] == product_type:
- 		    key = dict({'key': x, 'data': LICENSE_KEY_STORE[x]})
- 		    keys.append(key)
+        if LICENSE_KEY_STORE[x]['discord'] == discord_id and LICENSE_KEY_STORE[x]['plan'] == product_type:
+            key = dict({'key': x, 'data': LICENSE_KEY_STORE[x]})
+            keys.append(key)
 
 
     return jsonify({"Keys": keys}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
+   app.run(debug=True)
