@@ -58,7 +58,7 @@ OTP_STORE = {}
 PLANS = ["Lifetime", "$60/6 months", "Plan 3"]
 
 
-API_KEY = "InlI1rJEncEEP79fus9CgQRIPe4lmY"
+API_KEY = "PE35NdyLjDPaCgjuHRbM6VuvCRvHg2"
 API_SECRET = "secretly_secret"
 
 
@@ -143,7 +143,6 @@ def transfer_endpoint():
     """
 
     data = request.json
-    print(data, "data")
 
     if request.headers.get("Authorization") != API_KEY:
         return jsonify({"error": "Invalid API Key"}), 401
@@ -204,67 +203,6 @@ def plan_endpoint():
     return jsonify({"plans": PLANS})
 
 
-
-@app.route("/unlisted-keys", methods=["POST"])
-def unlisted_keys_endpoint():
-    """
-    Return list of available license plan
-     Input in JSON format :
-    {
-        "discord_id": <USER_DISCORD_ID>,
-        "product_type": <PRODUCT_LICENSE_TYPE>,
-    }
-
-      
-    
-    {
-        "Keys": [
-            {
-              "data": {
-                "discord": "647663506153275409", 
-                "expire": "2022-01-01 00:00 UTC", 
-                "plan": "Lifetime", 
-                "renewal": false
-              }, 
-              "key": "PRIVATE_LICENSE_KEY_7"
-            }
-        ]
-
-    :return: 200 OK
-    }
-    
-
-    :return 404 Not Found
-    :return [401] Unauthorized (Invalid API Key)
-
-    """
-
-    data = request.json
-    print(data, flush=True)
-
-    if request.headers.get("Authorization") != API_KEY:
-        return jsonify({"error": "Invalid API Key"}), 401
-
-    if data["secret_key"] != API_SECRET:
-        return jsonify({"error": "Invalid API SECRET KEY"}), 401
-
-
-
-    
-    discord_id = data["discord_id"]
-    product_type = data["product_type"]
-
-
-    keys = []
-
-
-    for x in LICENSE_KEY_STORE:
-        if LICENSE_KEY_STORE[x]['discord'] == discord_id and LICENSE_KEY_STORE[x]['plan'] == product_type:
-            key = dict({'key': x, 'data': LICENSE_KEY_STORE[x]})
-            keys.append(key)
-
-
-    return jsonify({"Keys": keys}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
